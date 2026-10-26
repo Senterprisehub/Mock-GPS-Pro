@@ -1,0 +1,6 @@
+{
+  "name": "Mock GPS Pro",
+  "description": "Location spoofing, route simulation, and telemetry diagnostic suite for Android",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

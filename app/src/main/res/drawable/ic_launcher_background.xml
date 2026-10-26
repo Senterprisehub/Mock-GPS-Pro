@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Dark deep tech gradient background -->
+    <path android:pathData="M0,0h108v108h-108z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="0"
+                android:startY="0"
+                android:endX="108"
+                android:endY="108"
+                android:type="linear">
+                <item android:color="#0F172A" android:offset="0.0" />
+                <item android:color="#1E293B" android:offset="0.5" />
+                <item android:color="#020617" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- Radar concentric rings -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M54,54m-42,0a42,42 0 1,1 84,0a42,42 0 1,1 -84,0"
+        android:strokeWidth="0.8"
+        android:strokeColor="#1E3A8A" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M54,54m-28,0a28,28 0 1,1 56,0a28,28 0 1,1 -56,0"
+        android:strokeWidth="0.8"
+        android:strokeColor="#2563EB"
+        android:strokeAlpha="0.4" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M54,54m-14,0a14,14 0 1,1 28,0a14,14 0 1,1 -28,0"
+        android:strokeWidth="0.8"
+        android:strokeColor="#38BDF8"
+        android:strokeAlpha="0.3" />
+    <!-- Grid Crosshair Axes -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M54,12L54,96"
+        android:strokeWidth="0.8"
+        android:strokeColor="#3B82F6"
+        android:strokeAlpha="0.25" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M12,54L96,54"
+        android:strokeWidth="0.8"
+        android:strokeColor="#3B82F6"
+        android:strokeAlpha="0.25" />
+</vector>
