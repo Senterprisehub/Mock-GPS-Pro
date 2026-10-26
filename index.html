@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mock GPS Pro</title>
+    <meta
+      name="description"
+      content="Download the latest Mock GPS Pro release automatically from GitHub Releases."
+    />
+    <style>
+      :root {
+        --bg: #f3f7ff;
+        --panel: #ffffff;
+        --text: #0f172a;
+        --muted: #475569;
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --success: #10b981;
+        --border: #dbe5ff;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: Inter, Arial, sans-serif;
+        background: linear-gradient(180deg, #edf5ff 0%, #f8fbff 100%);
+        color: var(--text);
+      }
+
+      .container {
+        max-width: 960px;
+        margin: 80px auto;
+        padding: 24px;
+      }
+
+      .hero {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        box-shadow: 0 20px 50px rgba(37, 99, 235, 0.08);
+        padding: 48px 32px;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(37, 99, 235, 0.08);
+        color: var(--primary);
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 18px 0 10px;
+        font-size: clamp(2.2rem, 4vw, 4rem);
+        line-height: 1.08;
+      }
+
+      .subtitle {
+        color: var(--muted);
+        font-size: 1.08rem;
+        line-height: 1.7;
+        max-width: 760px;
+      }
+
+      .version-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 20px;
+        padding: 10px 16px;
+        border-radius: 999px;
+        background: #ecfdf5;
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        color: #047857;
+        font-weight: 700;
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 30px;
+      }
+
+      .download-btn,
+      .secondary-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        padding: 0 22px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      .download-btn {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        box-shadow: 0 12px 28px rgba(37, 99, 235, 0.22);
+      }
+
+      .secondary-btn {
+        background: white;
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+
+      .download-btn:hover,
+      .secondary-btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .meta {
+        margin-top: 32px;
+        font-size: 0.96rem;
+        color: var(--muted);
+      }
+
+      .loading {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      @media (max-width: 640px) {
+        .hero { padding: 32px 20px; }
+        .cta-row { flex-direction: column; }
+        .download-btn, .secondary-btn { width: 100%; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <section class="hero">
+        <div class="eyebrow">Latest customer build</div>
+        <h1>Mock GPS Pro</h1>
+        <p class="subtitle">
+          Download the newest release automatically from GitHub. This page refreshes to the
+          latest published APK link whenever a new GitHub release is created.
+        </p>
+
+        <div id="release-badge" class="version-badge" aria-live="polite">
+          <span id="status">Loading latest release…</span>
+        </div>
+
+        <div class="cta-row">
+          <a id="download-link" class="download-btn" href="#" target="_blank" rel="noopener noreferrer">
+            Download latest APK
+          </a>
+          <a class="secondary-btn" href="https://github.com/Senterprisehub/Mock-GPS-Pro/releases" target="_blank" rel="noopener noreferrer">
+            View all releases
+          </a>
+        </div>
+
+        <div id="release-meta" class="meta">Checking GitHub releases…</div>
+      </section>
+    </div>
+
+    <script>
+      const repo = "Senterprisehub/Mock-GPS-Pro";
+      const releaseUrl = `https://api.github.com/repos/${repo}/releases/latest`;
+      const fallbackDownloadUrl = "https://github.com/Senterprisehub/Mock-GPS-Pro/releases/latest";
+
+      const releaseBadge = document.getElementById("release-badge");
+      const status = document.getElementById("status");
+      const downloadLink = document.getElementById("download-link");
+      const releaseMeta = document.getElementById("release-meta");
+
+      async function loadLatestRelease() {
+        try {
+          const response = await fetch(releaseUrl, {
+            headers: { Accept: "application/vnd.github+json" }
+          });
+
+          if (!response.ok) {
+            throw new Error("Latest release request failed");
+          }
+
+          const data = await response.json();
+          const version = data.tag_name || "latest";
+          const htmlUrl = data.html_url || fallbackDownloadUrl;
+          const asset = Array.isArray(data.assets) && data.assets.length > 0 ? data.assets[0] : null;
+          const download = asset && asset.browser_download_url ? asset.browser_download_url : htmlUrl;
+          const published = data.published_at ? new Date(data.published_at).toLocaleDateString() : "recently";
+
+          status.textContent = `Latest: ${version}`;
+          downloadLink.href = download;
+          downloadLink.textContent = `Download ${version} APK`;
+          releaseMeta.textContent = `Published ${published} · GitHub release: ${version}`;
+          releaseBadge.style.display = "inline-flex";
+        } catch (error) {
+          status.textContent = "Latest release unavailable";
+          downloadLink.href = fallbackDownloadUrl;
+          downloadLink.textContent = "Open latest release";
+          releaseMeta.textContent = "Using the GitHub release page because the API request could not complete.";
+        }
+      }
+
+      loadLatestRelease();
+    </script>
+  </body>
+</html>
