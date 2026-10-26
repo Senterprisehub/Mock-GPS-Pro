@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Stop
@@ -35,7 +36,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -62,6 +62,7 @@ import com.example.ui.theme.Slate900
 fun AppHeaderBar(
     isMocking: Boolean,
     onToggleMocking: () -> Unit,
+    onDownloadLatestRelease: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -138,13 +139,36 @@ fun AppHeaderBar(
                 }
             }
 
-            // Right: Status indicator & Toggle button
+            // Right: Status indicator & Actions
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 // Status Badge
                 StatusBadge(isMocking = isMocking)
+
+                Button(
+                    onClick = onDownloadLatestRelease,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = BlueSubtle,
+                        contentColor = BluePrimary
+                    ),
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier.testTag("download_latest_release_btn")
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Download,
+                        contentDescription = "Download latest customer release",
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = "Download",
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                }
 
                 // Master Action Button
                 val buttonColor by animateColorAsState(
@@ -246,3 +270,4 @@ fun StatusBadge(
         }
     }
 }
+

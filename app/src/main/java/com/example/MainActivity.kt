@@ -1,11 +1,16 @@
 package com.example
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -34,18 +39,16 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.activity.compose.BackHandler
-import androidx.activity.compose.LocalActivity
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ui.components.AppBottomNavBar
@@ -64,6 +67,9 @@ import com.example.ui.theme.Slate600
 import com.example.ui.theme.Slate800
 import com.example.ui.viewmodel.AppTab
 import com.example.ui.viewmodel.MockGpsViewModel
+
+private const val LATEST_RELEASE_URL =
+    "https://github.com/Senterprisehub/Mock-GPS-Pro/releases/latest/download/Mock.GPS.Pro.-.v1.0.apk"
 
 class MainActivity : ComponentActivity() {
 
@@ -135,6 +141,19 @@ fun MockGpsApp(viewModel: MockGpsViewModel = viewModel()) {
     val permissionsState by viewModel.permissionsState.collectAsState()
 
     var showExitConfirmDialog by remember { mutableStateOf(false) }
+
+    val openLatestRelease: () -> Unit = {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(LATEST_RELEASE_URL))
+        try {
+            context.startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(
+                context,
+                "No browser available to open the latest customer download.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
 
     // Intercept back navigation: Close exit dialog if open, return to MAP tab if on other tabs, or show confirmation exit dialog
     BackHandler(enabled = true) {
@@ -216,6 +235,7 @@ fun MockGpsApp(viewModel: MockGpsViewModel = viewModel()) {
             AppHeaderBar(
                 isMocking = isMocking,
                 onToggleMocking = { viewModel.toggleMocking() },
+                onDownloadLatestRelease = openLatestRelease,
                 modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars)
             )
         },
@@ -251,3 +271,4 @@ fun MockGpsApp(viewModel: MockGpsViewModel = viewModel()) {
         }
     }
 }
+
