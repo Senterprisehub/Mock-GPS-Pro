@@ -6,10 +6,19 @@
 
 ---
 
-## 1. Executive Summary & Product Overview
-**Mock GPS Pro** is an enterprise-grade GNSS location simulation, route automation, and telemetry diagnostic suite designed for QA engineers, mobile app developers, geospatial researchers, and privacy-conscious power users. 
+## Screenshots
 
-Built on Android’s official `LocationManager` and Google Play Services `FusedLocationProviderClient` test provider pipelines, Mock GPS Pro injects realistic, physics-accurate GPS coordinates, altitude, bearing, speed, and satellite signal metrics across your device in real time—without requiring root access.
+<div align="center">
+  <img src="app/src/test/screenshots/greeting.png" alt="Mock GPS Pro map view" width="320" />
+  <img src="app/src/test/screenshots/greeting.png" alt="Mock GPS Pro route planner and control panel" width="320" />
+</div>
+
+---
+
+## 1. Executive Summary & Product Overview
+**Mock GPS Pro** is an enterprise-grade GNSS location simulation, route automation, and telemetry diagnostic suite designed for QA engineers, mobile app developers, geospatial researchers, and privacy[...] 
+
+Built on Android’s official `LocationManager` and Google Play Services `FusedLocationProviderClient` test provider pipelines, Mock GPS Pro injects realistic, physics-accurate GPS coordinates, altitu[...] 
 
 ---
 
@@ -26,7 +35,7 @@ The Map Studio serves as the visual command center for real-time coordinate targ
   * **Mock Target Pin (Blue):** Displays the exact simulated coordinate being injected into the Android OS, complete with an accuracy radius ring and directional heading cone.
   * **Real Hardware GPS Pin (Green):** Simultaneously displays your physical GPS location (when hardware GPS is active) and calculates the real-time **Mock vs. Real Distance Delta** (`Δ km/m`).
 * **Never-Lost Target Pin Radar:**
-  * If you pan or zoom away from your active Mock Target Pin, an interactive floating radar banner (`📍 Target Pin: X.X km • Tap to Center`) with a live directional arrow appears at the top of the viewport. Tapping it immediately snaps the camera back to your target pin.
+  * If you pan or zoom away from your active Mock Target Pin, an interactive floating radar banner (`📍 Target Pin: X.X km • Tap to Center`) with a live directional arrow appears at the top of the[...] 
 * **Universal Place Search & Reverse Geocoding:**
   * Search any global street address, town, landmark, or postal code with instant autocomplete suggestions, or enter direct `Latitude, Longitude` pairs.
   * Live reverse-geocoding banner at the top of the map displays the human-readable street address and locality of your current target pin.
@@ -46,7 +55,7 @@ Simulate realistic journeys along real road networks or custom multi-waypoint pa
 * **Interactive Waypoint Editor:**
   * Reorder stops, adjust **Dwell / Pause Timers** at specific stops (e.g., pause 30 seconds at a delivery checkpoint), or add waypoints directly by tapping on the map.
 * **Transport Speed Profiles & Physics:**
-  * Choose from preset transport modes (**Walk** ~5 km/h, **Run** ~12 km/h, **Bicycle** ~22 km/h, **City Car** ~50 km/h, **Highway** ~100 km/h, **High-Speed Rail / Drone** ~250+ km/h) or dial in a custom speed slider.
+  * Choose from preset transport modes (**Walk** ~5 km/h, **Run** ~12 km/h, **Bicycle** ~22 km/h, **City Car** ~50 km/h, **Highway** ~100 km/h, **High-Speed Rail / Drone** ~250+ km/h) or dial in a cus[...] 
   * **Loop Mode:** Continuously repeat the route(A → B → A or circular loop) for endurance testing.
 * **Live Playback Controls & ETA Telemetry:**
   * Start, Pause, Resume, or Stop route simulation at any time.
@@ -61,7 +70,7 @@ An integrated natural-language location and route assistant for rapid scenario g
 * **Natural Language Teleportation:**
   * Type commands such as *"Teleport to Victoria Memorial, Kolkata"* or *"Move 2.5 km northeast of current position"* to immediately resolve coordinates and jump the mock target pin.
 * **Automated Multi-Stop Scenario Builder:**
-  * Ask the assistant to generate realistic test itineraries (e.g., *"Create a 4-stop delivery route around Salt Lake Sector V at 35 km/h"*) and load them directly into the Route Simulator with a single tap.
+  * Ask the assistant to generate realistic test itineraries (e.g., *"Create a 4-stop delivery route around Salt Lake Sector V at 35 km/h"*) and load them directly into the Route Simulator with a sing[...] 
 * **Instant Coordinate & Geodesic Calculations:**
   * Query distances, bearings, elevation estimates, and bounding boxes for geofence testing.
 
@@ -94,7 +103,7 @@ Configure anti-detection physics and verify Android Developer Options in one gui
 
 ## 3. Background Reliability & Floating Overlay Controls
 * **Persistent Foreground Simulation Service:**
-  * Once you tap **START MOCK**, a high-priority Android Foreground Service keeps injecting coordinates continuously even when you minimize Mock GPS Pro and switch to Google Maps, Uber, Strava, delivery apps, or your own app under test.
+  * Once you tap **START MOCK**, a high-priority Android Foreground Service keeps injecting coordinates continuously even when you minimize Mock GPS Pro and switch to Google Maps, Uber, Strava, delive[...] 
 * **System Notification Controls:**
   * View current simulated coordinates and stop or pause simulation directly from the Android notification shade.
 
@@ -117,7 +126,7 @@ Configure anti-detection physics and verify Android Developer Options in one gui
 ## 5. Frequently Asked Questions (FAQ) & Troubleshooting
 
 * **Q: Why does my location briefly jump back ("rubber-band") to my real location in some apps?**  
-  **A:** Ensure that your update interval in the **Setup** tab is set to **500 ms or faster**, and enable **Realism Micro-Jitter**. Mock GPS Pro injects into both the `GPS_PROVIDER` and Google Play Services `FusedLocationProviderClient` to prevent rubber-banding.
+  **A:** Ensure that your update interval in the **Setup** tab is set to **500 ms or faster**, and enable **Realism Micro-Jitter**. Mock GPS Pro injects into both the `GPS_PROVIDER` and Google Play Se[...] 
 * **Q: What happens when I tap "STOP MOCK"?**  
   **A:** Mock GPS Pro cleanly removes the test providers and restores your phone’s native hardware GPS receiver within 1–2 seconds.
 * **Q: Does Mock GPS Pro require root access?**  
