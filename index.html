@@ -514,7 +514,7 @@
             </p>
 
             <div class="cta-row" id="download">
-              <a id="download-link" class="btn btn-primary" href="#" target="_blank" rel="noopener noreferrer">Download latest APK</a>
+              <a id="download-link" class="btn btn-primary" href="#" target="_blank" rel="noopener noreferrer" download="MockGPSPro.apk">Download latest APK</a>
               <a class="btn btn-secondary" href="https://github.com/Senterprisehub/Mock-GPS-Pro/releases" target="_blank" rel="noopener noreferrer">View all releases</a>
             </div>
 
@@ -723,6 +723,16 @@
           : (release.html_url || fallbackReleaseUrl);
       }
 
+      function applyDownloadUrl(assetUrl, version) {
+        if (!assetUrl) return;
+
+        const filename = `MockGPSPro-${version || "latest"}.apk`;
+        downloadLink.href = assetUrl;
+        downloadLink.download = filename;
+        downloadLink.setAttribute("aria-label", `Download ${version || "latest"} APK file`);
+        downloadLink.textContent = `Download ${version || "latest"} APK`;
+      }
+
       async function loadLatestRelease() {
         try {
           const response = await fetch(releaseApiUrl, {
@@ -740,14 +750,14 @@
 
           status.textContent = `Latest: ${version}`;
           releaseValue.textContent = version;
-          releaseMeta.textContent = `Published ${published} · Auto-linked to the newest GitHub release APK.`;
-          downloadLink.href = assetUrl;
-          downloadLink.textContent = `Download ${version} APK`;
+          releaseMeta.textContent = `Published ${published} · Direct APK download linked from the latest GitHub release.`;
+          applyDownloadUrl(assetUrl, version);
         } catch (error) {
           status.textContent = "Latest release unavailable";
           releaseValue.textContent = "GitHub release";
           releaseMeta.textContent = "Fallback link enabled. The GitHub release page can still be opened manually.";
           downloadLink.href = fallbackReleaseUrl;
+          downloadLink.download = "MockGPSPro-latest.apk";
           downloadLink.textContent = "Open latest release";
         }
       }
